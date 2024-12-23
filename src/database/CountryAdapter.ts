@@ -7,10 +7,7 @@ import { DbConnectionObserver } from '@src/types/observers'
 
 @Observer('CountryAdapter', OBSERVABLE_TOPICS.DATABASE_CONNECTION_ESTABLISHED)
 @Injectable('CountryAdapter', 'country', getDB)
-export class CountryAdapter<T extends CountryEntryV1>
-  extends MongoAdapter<T>
-  implements DbConnectionObserver
-{
+export class CountryAdapter<T extends CountryEntryV1> extends MongoAdapter<T> implements DbConnectionObserver {
   public async update(isConnected: boolean, db: Db): Promise<void> {
     if (isConnected && db) {
       try {

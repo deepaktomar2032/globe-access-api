@@ -24,7 +24,6 @@ export class CountryManager {
       )) as unknown as EntryList<VisaEntryV1>
 
       const countryList = items.map((item) => item.destinationCountry)
-      // console.log(countryList)
 
       const items1: EntryList<CountryEntryV1> = (await this.countryAdapter.aggregate([
         { $match: { isoAlpha2Code: { $in: countryList } } },

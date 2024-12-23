@@ -7,10 +7,7 @@ import { DbConnectionObserver } from '@src/types/observers'
 
 @Observer('VisaAdapter', OBSERVABLE_TOPICS.DATABASE_CONNECTION_ESTABLISHED)
 @Injectable('VisaAdapter', 'visa', getDB)
-export class VisaAdapter<T extends VisaEntryV1>
-  extends MongoAdapter<T>
-  implements DbConnectionObserver
-{
+export class VisaAdapter<T extends VisaEntryV1> extends MongoAdapter<T> implements DbConnectionObserver {
   public async update(isConnected: boolean, db: Db): Promise<void> {
     if (isConnected && db) {
       try {

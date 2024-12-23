@@ -12,7 +12,7 @@ export const attachExponentialBackoffInterceptor = (
   instance: AxiosInstance,
   maxRetries: number = 5,
   baseDelay: number = 400,
-  maxDelay: number = 5000,
+  maxDelay: number = 5000
 ) => {
   let retryCount: number = 0
 
@@ -31,7 +31,7 @@ export const attachExponentialBackoffInterceptor = (
           delay,
           retryCount,
           status: error.response?.status,
-          url: error.response.request.url,
+          url: error.response.request.url
         })
 
         return new Promise<AxiosResponse>((resolve: (value: AxiosResponse) => void) => {
@@ -43,6 +43,6 @@ export const attachExponentialBackoffInterceptor = (
       retryCount = 0
 
       return Promise.reject(error)
-    },
+    }
   )
 }

@@ -51,7 +51,7 @@ const terminator: (sig: any) => void = (sig: any): void => {
   'SIGUSR1',
   'SIGSEGV',
   'SIGUSR2',
-  'SIGTERM',
+  'SIGTERM'
 ].forEach((signal: any): void => {
   process.on(signal, (): void => {
     terminator(signal)
