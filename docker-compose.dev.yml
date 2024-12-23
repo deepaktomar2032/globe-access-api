@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  visa-free-country-api-dev:
+    container_name: visa-free-country-api-dev
+    build:
+      context: .
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: 'npm run start:dev'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo_db:27018/country-db
+      MONGODB_DATABASE_NAME: country-db
+      MONGODB_CONNECT_TIMEOUTMS: 5000
+
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo:6.0
+    container_name: mongo_db
+    command: mongod --port 27018
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    ports:
+      - 27018:27018
+
+volumes:
+  mongo_db:
