@@ -18,7 +18,7 @@ export class CountryManager {
       const { items }: EntryList<VisaEntryV1> = (await this.visaAdapter.aggregate(
         [
           { $match: { sourceCountry: isoAlpha2Code, visaStatus: { $in: visaStatus } } },
-             { $project: { _id: 0, createdAt: 0, updatedAt: 0 } }
+          { $project: { _id: 0, createdAt: 0, updatedAt: 0 } }
         ],
         { allowDiskUse: true }
       )) as unknown as EntryList<VisaEntryV1>
