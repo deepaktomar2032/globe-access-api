@@ -1,5 +1,5 @@
 {
-  "name": "visa-free-country-api",
+  "name": "globe-access-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,15 +20,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepaktomar2031/visa-free-country-api.git"
+    "url": "git+https://github.com/deepaktomar2031/globe-access-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/deepaktomar2031/visa-free-country-api/issues"
+    "url": "https://github.com/deepaktomar2031/globe-access-api/issues"
   },
-  "homepage": "https://github.com/deepaktomar2031/visa-free-country-api#readme",
+  "homepage": "https://github.com/deepaktomar2031/globe-access-api#readme",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/jest": "^29.5.14",
