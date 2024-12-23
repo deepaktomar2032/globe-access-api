@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-  visa-free-country-api-dev:
-    container_name: visa-free-country-api-dev
+  globe-access-api-dev:
+    container_name: globe-access-api-dev
     build:
       context: .
     volumes:
