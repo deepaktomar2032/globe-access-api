@@ -13,9 +13,10 @@ services:
     command: 'npm run start:prod'
     environment:
       NODE_ENV: production
+      APP_ENV: production
       PORT: 3000
-      MONGODB_URI: mongodb://mongo_db:27018/country-db
-      MONGODB_DATABASE_NAME: country-db
+      MONGODB_URI: mongodb://mongo_db:27018/globe-access-api
+      MONGODB_DATABASE_NAME: globe-access-api
       MONGODB_CONNECT_TIMEOUTMS: 5000
 
     depends_on:

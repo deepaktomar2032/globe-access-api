@@ -5,6 +5,7 @@ import { ClientSession, Db, MongoClient } from 'mongodb'
 import { OBSERVABLE_TOPICS } from '@src/constants/observers'
 import { DbConnectionObserver } from '@src/types/observers'
 import { getObservers } from '@src/utils/getObservers'
+import { MONGODB_URI, MONGODB_DATABASE_NAME, MONGODB_CONNECT_TIMEOUTMS } from '@src/constants'
 
 let db: Db
 let session: ClientSession
@@ -13,11 +14,11 @@ export const connectToMongoDB: () => Promise<void> = async (): Promise<void> => 
   const defaultConnectionTimeout: number = 30000
 
   try {
-    const mongoUri: string = process.env.MONGODB_URI || ''
-    const dbName: string = process.env.MONGODB_DATABASE_NAME || 'country-db'
+    const mongoUri: string = MONGODB_URI
+    const dbName: string = MONGODB_DATABASE_NAME
 
     const client: MongoClient = new MongoClient(mongoUri, {
-      connectTimeoutMS: Number(process.env.MONGODB_CONNECT_TIMEOUTMS) || defaultConnectionTimeout
+      connectTimeoutMS: MONGODB_CONNECT_TIMEOUTMS || defaultConnectionTimeout
     })
 
     let serverHeartbeatFailed: number = 0
