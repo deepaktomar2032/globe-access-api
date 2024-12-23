@@ -7,7 +7,7 @@ export class ExtendedError extends Error {
   constructor({ message, statusCode }: IError) {
     super(message)
     this.statusCode = statusCode || null
-        this.name = this.constructor.name
+         this.name = this.constructor.name
     Error.captureStackTrace(this, this.constructor)
   }
 }

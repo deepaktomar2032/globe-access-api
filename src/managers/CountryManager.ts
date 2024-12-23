@@ -18,9 +18,9 @@ export class CountryManager {
       const { items }: EntryList<VisaEntryV1> = (await this.visaAdapter.aggregate(
         [
           { $match: { sourceCountry: isoAlpha2Code, visaStatus: { $in: visaStatus } } },
-          { $project: { _id: 0, createdAt: 0, updatedAt: 0 } },
+             { $project: { _id: 0, createdAt: 0, updatedAt: 0 } }
         ],
-        { allowDiskUse: true },
+        { allowDiskUse: true }
       )) as unknown as EntryList<VisaEntryV1>
 
       const countryList = items.map((item) => item.destinationCountry)
@@ -28,17 +28,14 @@ export class CountryManager {
 
       const items1: EntryList<CountryEntryV1> = (await this.countryAdapter.aggregate([
         { $match: { isoAlpha2Code: { $in: countryList } } },
-        { $project: { _id: 0, createdAt: 0, updatedAt: 0 } },
+        { $project: { _id: 0, createdAt: 0, updatedAt: 0 } }
       ])) as unknown as EntryList<CountryEntryV1>
 
       const finalResponse: Response = { ...result, visaStatus: items1.items }
 
       return finalResponse
     } catch (error) {
-      console.error(
-        'CountryManager:getCountryList: Failed to fetch country list',
-        transformException(error),
-      )
+      console.error('CountryManager:getCountryList: Failed to fetch country list', transformException(error))
       throw new Error()
     }
   }
@@ -46,14 +43,11 @@ export class CountryManager {
   public async getAllCountryList(): Promise<CountryEntryV1> {
     try {
       const result = (await this.countryAdapter.findEntries({}, undefined, undefined, undefined, {
-        withProjection: false,
+        withProjection: false
       })) as unknown as CountryEntryV1
       return result
     } catch (error) {
-      console.error(
-        'CountryManager:getAllCountryList: Failed to fetch country list',
-        transformException(error),
-      )
+      console.error('CountryManager:getAllCountryList: Failed to fetch country list', transformException(error))
       throw new Error()
     }
   }
@@ -62,10 +56,7 @@ export class CountryManager {
     try {
       await this.countryAdapter.insertMany(countryEntries)
     } catch (error) {
-      console.error(
-        'CountryManager:insertData: Failed to insert notification',
-        transformException(error),
-      )
+      console.error('CountryManager:insertData: Failed to insert notification', transformException(error))
       throw new Error()
     }
   }
