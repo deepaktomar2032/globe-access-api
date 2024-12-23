@@ -19,7 +19,7 @@ import {
   MongoServerError,
   AggregateOptions,
   AggregationCursor,
-  ObjectId,
+  ObjectId
 } from 'mongodb'
 import { Entry, EntryList } from '@src/types/mongo'
 import { transformException } from '@src/utils'
@@ -57,11 +57,7 @@ export abstract class MongoAdapter<T extends Entry> {
   protected readonly entryProjection: object
   protected readonly dbConnectionRetriever: () => Db
 
-  constructor(
-    collectionName: string,
-    dbConnectionRetriever: () => Db,
-    projection: object = { _id: 1 },
-  ) {
+  constructor(collectionName: string, dbConnectionRetriever: () => Db, projection: object = { _id: 1 }) {
     this.collectionName = collectionName
     this.entryProjection = projection
     this.dbConnectionRetriever = dbConnectionRetriever
@@ -72,7 +68,7 @@ export abstract class MongoAdapter<T extends Entry> {
     sort: Sort = { createdAt: -1 },
     limit: number = this.defaultLimit,
     page: number = 0,
-    options: FindEntryOptions = { withProjection: true },
+    options: FindEntryOptions = { withProjection: true }
   ): Promise<L> {
     try {
       const findOptions: FindOptions<T> = {}
@@ -80,9 +76,7 @@ export abstract class MongoAdapter<T extends Entry> {
         findOptions.projection = this.entryProjection
       }
 
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
 
       const cursor: FindCursor = collection.find(query, findOptions).sort(sort)
 
@@ -96,12 +90,12 @@ export abstract class MongoAdapter<T extends Entry> {
       const totalPages: number = Math.ceil(totalCount / limit)
 
       const result: L = {
-        // eslint-disable-next-line no-underscore-dangle
+         
         items: entries.map((entry: Entry) => omit({ id: entry._id.toString(), ...entry }, '_id')),
         page,
         pageSize: limit,
         totalItems: totalCount,
-        totalPages,
+        totalPages
       } as unknown as L
 
       return result
@@ -112,15 +106,13 @@ export abstract class MongoAdapter<T extends Entry> {
 
   public async findOne(
     query: Filter<T>,
-    options: FindOneOptions = { withProjection: true },
+    options: FindOneOptions = { withProjection: true }
   ): Promise<Omit<WithId<T>, '_id'>> {
     try {
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
       const entry: WithId<T> = await collection.findOne(query, options)
 
-      // eslint-disable-next-line no-underscore-dangle
+       
       return entry ? omit({ id: entry._id.toString(), ...entry }, '_id') : undefined
     } catch (error) {
       this.logAndBubble(error as Error, { query })
@@ -129,15 +121,13 @@ export abstract class MongoAdapter<T extends Entry> {
 
   public async insertOne(doc: OptionalUnlessRequiredId<T>): Promise<InsertOneResultWithId> {
     try {
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
       const now: Date = new Date()
 
       const result: InsertOneResult = await collection.insertOne({
         ...doc,
         createdAt: now,
-        updatedAt: now,
+        updatedAt: now
       })
 
       return { ...result, insertedId: result.insertedId?.toString() }
@@ -148,17 +138,15 @@ export abstract class MongoAdapter<T extends Entry> {
 
   public async upsertEntry(
     query: Filter<T>,
-    update?: UpdateFilter<T>,
+    update?: UpdateFilter<T>
   ): Promise<{ entry?: T; updateResult: UpdateResultWithId }> {
     try {
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
       const now: Date = new Date()
 
       const setter: Partial<T> = {
         ...(update || query),
-        updatedAt: now,
+        updatedAt: now
       } as unknown as Partial<T>
 
       const creationDate: Partial<T> = { createdAt: now } as unknown as T
@@ -168,21 +156,21 @@ export abstract class MongoAdapter<T extends Entry> {
         : ({ $set: setter, $setOnInsert: creationDate } as unknown as UpdateFilter<T>)
 
       const updateResult: UpdateResult = await collection.updateOne(query, updateFilter, {
-        upsert: true,
+        upsert: true
       })
 
       const updateResultWithId: UpdateResultWithId = {
         ...updateResult,
-        upsertedId: updateResult.upsertedId?.toString(),
+        upsertedId: updateResult.upsertedId?.toString()
       }
 
       if (updateResult.modifiedCount > 0) {
         const entry: WithId<T> = await collection.findOne(query)
 
-        // eslint-disable-next-line no-underscore-dangle
+         
         return {
           entry: omit({ ...entry, id: entry._id?.toString() }, '_id') as T,
-          updateResult: updateResultWithId,
+          updateResult: updateResultWithId
         }
       } else {
         return { updateResult: updateResultWithId }
@@ -192,29 +180,25 @@ export abstract class MongoAdapter<T extends Entry> {
     }
   }
 
-  public async insertMany(
-    documents: OptionalUnlessRequiredId<T>[] = [],
-  ): Promise<InsertManyResultWithId> {
+  public async insertMany(documents: OptionalUnlessRequiredId<T>[] = []): Promise<InsertManyResultWithId> {
     try {
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
       const documentsToInsert: OptionalUnlessRequiredId<T>[] = documents.map(
         (document: OptionalUnlessRequiredId<T>) => {
           return {
             ...document,
-            createdAt: new Date(),
+            createdAt: new Date()
           }
-        },
+        }
       )
 
       const result: InsertManyResult = await collection.insertMany(documentsToInsert, {
-        ordered: true,
+        ordered: true
       })
 
       return {
         ...result,
-        insertedIds: Object.values(result.insertedIds).map((id: ObjectId) => id.toString()),
+        insertedIds: Object.values(result.insertedIds).map((id: ObjectId) => id.toString())
       }
     } catch (error) {
       this.logAndBubble(error as Error)
@@ -223,12 +207,10 @@ export abstract class MongoAdapter<T extends Entry> {
 
   public async aggregate<K extends Document>(
     pipeline: Document[],
-    options?: AggregateOptions,
+    options?: AggregateOptions
   ): Promise<{ items: K[] }> {
     try {
-      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(
-        this.collectionName,
-      )
+      const collection: Collection<T> = this.dbConnectionRetriever().collection<T>(this.collectionName)
 
       const cursor: AggregationCursor<Document> = collection.aggregate(pipeline, options)
 
@@ -240,10 +222,7 @@ export abstract class MongoAdapter<T extends Entry> {
     }
   }
 
-  public async assertCollectionIndex(
-    indexFields: IndexSpecification,
-    options: CreateIndexesOptions,
-  ): Promise<void> {
+  public async assertCollectionIndex(indexFields: IndexSpecification, options: CreateIndexesOptions): Promise<void> {
     try {
       const collection: Collection<T> = await this.assertCollection()
 
@@ -251,9 +230,7 @@ export abstract class MongoAdapter<T extends Entry> {
       if (!indexExists) {
         try {
           const createdIndexName: string = await collection.createIndex(indexFields, options)
-          console.info(
-            `MongoDB: index ${createdIndexName} was asserted for collection ${this.collectionName}`,
-          )
+          console.info(`MongoDB: index ${createdIndexName} was asserted for collection ${this.collectionName}`)
         } catch (err) {
           console.error('MongoDB: error creating index', err)
           throw new Error()
@@ -274,9 +251,7 @@ export abstract class MongoAdapter<T extends Entry> {
   }
 
   public async collectionExists(collectionName: string = this.collectionName): Promise<boolean> {
-    return !!(await this.dbConnectionRetriever()
-      .listCollections({ name: collectionName }, { nameOnly: true })
-      .next())
+    return !!(await this.dbConnectionRetriever().listCollections({ name: collectionName }, { nameOnly: true }).next())
   }
 
   private logAndBubble(error: Error, additionalInfo?: object) {

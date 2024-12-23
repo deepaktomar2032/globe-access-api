@@ -17,7 +17,7 @@ export const connectToMongoDB: () => Promise<void> = async (): Promise<void> => 
     const dbName: string = process.env.MONGODB_DATABASE_NAME || 'country-db'
 
     const client: MongoClient = new MongoClient(mongoUri, {
-      connectTimeoutMS: Number(process.env.MONGODB_CONNECT_TIMEOUTMS) || defaultConnectionTimeout,
+      connectTimeoutMS: Number(process.env.MONGODB_CONNECT_TIMEOUTMS) || defaultConnectionTimeout
     })
 
     let serverHeartbeatFailed: number = 0
@@ -35,9 +35,7 @@ export const connectToMongoDB: () => Promise<void> = async (): Promise<void> => 
       wasReconnected = false
 
       if (!wasReconnected) {
-        console.error(
-          `connectToMongoDB: MongoDB Connection Error - retry: ${serverHeartbeatFailed} -`,
-        )
+        console.error(`connectToMongoDB: MongoDB Connection Error - retry: ${serverHeartbeatFailed} -`)
       }
 
       client.once('serverHeartbeatSucceeded', loginfoAndContinue)
@@ -58,7 +56,7 @@ export const connectToMongoDB: () => Promise<void> = async (): Promise<void> => 
         } catch (err) {
           console.error('connectToMongoDB:observer', err)
         }
-      },
+      }
     )
 
     console.info('connectToMongoDB: MongoDB initialized connection')

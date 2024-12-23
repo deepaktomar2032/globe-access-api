@@ -12,7 +12,7 @@ export class CountryControllerV1 {
   @OnUndefined(STATUS_CODES.OK)
   public async calculateResult(
     @QueryParam('countryName', { required: true }) countryName: string,
-    @QueryParam('isoAlpha2Code', { required: true }) isoAlpha2Code: string,
+    @QueryParam('isoAlpha2Code', { required: true }) isoAlpha2Code: string
   ): Promise<Response> {
     const countryResponse = await countryManager.getCountryList({ countryName, isoAlpha2Code })
     return countryResponse

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const container: Map<string, any> = new Map()
-const requested: Map<string, { target: any; propertyKey: string | symbol; request: string }> =
-  new Map()
+const requested: Map<string, { target: any; propertyKey: string | symbol; request: string }> = new Map()
 
 const reserve: (target: any, propertyKey: string | symbol, request: string) => void = (
   target: any,
   propertyKey: string | symbol,
-  request: string,
+  request: string
 ): void => {
   requested.set(request.toUpperCase(), { propertyKey, request, target })
 }
@@ -28,12 +27,10 @@ const register: (key: string, item: any) => void = (key: string, item: any): voi
 
 const fetch: (key: string) => any = (key: string): any => container.get(key.toUpperCase())
 
-const forEach: (cb: (value: any, key: string) => void) => void = (
-  cb: (value: any, key: string) => void,
-) => container.forEach(cb)
+const forEach: (cb: (value: any, key: string) => void) => void = (cb: (value: any, key: string) => void) =>
+  container.forEach(cb)
 
-const remove: (key: string) => boolean = (key: string): boolean =>
-  container.delete(key.toUpperCase())
+const remove: (key: string) => boolean = (key: string): boolean => container.delete(key.toUpperCase())
 
 export interface Storage {
   register: (key: string, item: any) => void

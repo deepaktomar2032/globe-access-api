@@ -4,6 +4,6 @@ export const transformException = (error: unknown): object => {
   return {
     exception: err.name,
     exceptionMessage: err.message,
-    stacktrace: err.stack,
+    stacktrace: err.stack
   }
 }
