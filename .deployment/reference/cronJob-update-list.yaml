@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-list
+spec:
+  # At 06:00 on every 2nd day-of-month.
+  schedule: '0 6 */2 * *'
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: globe-access-api-update-list-job
+              image: curlimages/curl:8.5.0
+              env:
+                - name: INTERNAL_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: retail-media-self-service-api-access-data
+                      key: internal.api.key
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  until curl -fsI http://localhost:15021/healthz/ready; do echo "Waiting for Sidecar..."; sleep 3; done;
+                  echo "Sidecar available. Running command...";
+                  curl -s -L -X GET \
+                    -H "x-api-key: $(INTERNAL_API_KEY)" \
+                    '<production_url>/api/v1/monitoring/check-campaigns-goals';
+                  x=$?; curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
+          restartPolicy: Never
