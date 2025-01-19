@@ -1,7 +1,7 @@
 {
   "name": "globe-access-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Globe Access API",
   "main": "index.js",
   "_moduleAliases": {
     "@src": "build/src"
