@@ -137,7 +137,7 @@
     "currency": {
       "currencyCode": "AMD",
       "currencyName": "Armenian dram",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "hy",
@@ -305,7 +305,7 @@
     "currency": {
       "currencyCode": "AZN",
       "currencyName": "Azerbaijani manat",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "az",
@@ -326,7 +326,7 @@
     "currency": {
       "currencyCode": "BAM",
       "currencyName": "Bosnia and Herzegovina convertible mark",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "bs",
@@ -2594,7 +2594,7 @@
     "currency": {
       "currencyCode": "KZT",
       "currencyName": "Kazakhstani tenge",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "kk",
@@ -3290,7 +3290,7 @@
       "currencySymbol": "RM"
     },
     "language": {
-      "languageCode": null,
+      "languageCode": "",
       "languageName": "Malaysian"
     },
     "flag": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/MY.svg",
@@ -4694,7 +4694,7 @@
     "currency": {
       "currencyCode": "TRY",
       "currencyName": "Turkish lira",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "tr",
@@ -4752,7 +4752,7 @@
     "isoNumericCode": "158",
     "capital": "Taipei",
     "continentCode": "AS",
-    "continentName": null,
+    "continentName": "",
     "phoneCode": "",
     "currency": {
       "currencyCode": "TWD",
@@ -4904,7 +4904,7 @@
     "currency": {
       "currencyCode": "UZS",
       "currencyName": "Uzbekistani so'm",
-      "currencySymbol": null
+      "currencySymbol": ""
     },
     "language": {
       "languageCode": "uz",

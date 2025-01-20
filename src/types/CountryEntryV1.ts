@@ -21,7 +21,7 @@ export type CountryData = DbEntry & {
   continentName: string
   phoneCode: string
   currency: Currency
-  languages: Language
+  language: Language
   flag: string
   emoji: string
 }
