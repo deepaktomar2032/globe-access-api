@@ -1,2 +1,2 @@
+export * from './FeedDataManager'
 export * from './CountryManager'
-export * from './VisaManager'
