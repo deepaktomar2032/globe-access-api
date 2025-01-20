@@ -38,7 +38,7 @@
 - flag (String) URL
 - emoji (String)
 
-## visa
+## immigration
 - id (MongoDB ObjectId)
 - sourceCountry (String)
 - destinationCountry (String)
