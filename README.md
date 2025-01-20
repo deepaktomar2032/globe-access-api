@@ -12,6 +12,8 @@
 -  Infrastructure: Docker
 -  Testing: Jest
 
+# Features
+
 -  Get a list of all countries
 -  Get necessary visa information for all countries
 -  Get other necessary information for all countries (e.g. currency, language, capital, flag, phone code, etc.)
