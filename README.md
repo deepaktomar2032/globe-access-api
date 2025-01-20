@@ -61,6 +61,8 @@
 # To run project in development mode
 
 -  `npm run docker:dev`
+- an initial GET call is required in order to feed the data into the database (this is a one-time call) (postman or curl)
+- GET http://localhost:3000/api/v1/cron/feed-values
 
 # To run project in production mode
 
