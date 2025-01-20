@@ -1,4 +1,4 @@
-export interface ConnectionStatus {
+export type ConnectionStatus = {
   isServiceInitialized: boolean
   isMongoDbDown: boolean
 }

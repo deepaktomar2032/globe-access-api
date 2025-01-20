@@ -1,6 +1,6 @@
 import { DbEntry } from '@src/types'
 
-interface ImmigrationData extends DbEntry {
+type ImmigrationData = DbEntry & {
   sourceCountry: string
   destinationCountry: string
   visaStatus: string
