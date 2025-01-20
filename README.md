@@ -70,7 +70,6 @@
 
 -  It will start the server on port 3000 & api is available to consume
 
-
    -  Health check: GET - http://localhost:3000/health
    -  Initial Call: GET - http://localhost:3000/api/v1/initial-call
    -  Get required information for immigration policies: GET - http://localhost:3000/api/v1/country
